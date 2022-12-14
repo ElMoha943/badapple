@@ -9,18 +9,18 @@ from os.path import exists
 
 def get_pixels(image_path):
     im = Image.open(image_path)
-    im = im.convert('L')
-    im = im.resize((80, 45))
-    pixels = np.array(im)
+    im = im.convert('L') # convert to grayscale
+    im = im.resize((80, 45)) # resize to 80x45
+    pixels = np.array(im) # convert to numpy array
     return pixels
 
 def get_ascii(pixels):
-    ascii_chars = " .,:;irsXA253hMHGS#9B&@"
-    ascii_pixels = []
+    ascii_chars = " .,:;irsXA253hMHGS#9B&@" # 0-255
+    ascii_pixels = [] 
     for row in pixels:
         ascii_row = []
         for pixel in row:
-            ascii_row.append(ascii_chars[pixel // 25])
+            ascii_row.append(ascii_chars[pixel // 25]) # 25 = 256 / 10
         ascii_pixels.append(ascii_row)
     return ascii_pixels
 
@@ -31,24 +31,22 @@ def print_ascii(ascii_pixels):
 # get frame from video
 def getFrames(path):
     frames = []
-    cap = cv2.VideoCapture(path)
+    cap = cv2.VideoCapture(path) # open video
     current_frame = 0
     # get frame every 10 frames until end of video
     while cap.isOpened():
-        ret, frame = cap.read()
-        if ret:
+        ret, frame = cap.read() # read frame
+        if ret: # if frame is read correctly
             frames.append(f"frameIn/frame{current_frame}.jpg")
-            if(not exists(f"frameIn/frame{current_frame}.jpg")):
-                cv2.imwrite(f"frameIn/frame{current_frame}.jpg", frame)
+            if(not exists(f"frameIn/frame{current_frame}.jpg")): 
+                cv2.imwrite(f"frameIn/frame{current_frame}.jpg", frame) # save frame
             current_frame += 1
         else:
             break
     cap.release()
     cv2.destroyAllWindows()
 
-# get frames from frameIn folder
-
-
+# Main
 getFrames("badapple.mp4")
 
 for i in range(len(os.listdir('frameIn/'))):

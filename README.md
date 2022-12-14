@@ -1,0 +1,1 @@
+Crear una carpeta "frameIn" para almacenar los frames del video. Cambiar el parametro de la funcion `getFrames(path)` con la direccion del video que se desea convertir.
