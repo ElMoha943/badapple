@@ -33,7 +33,6 @@ def getFrames(path):
     frames = []
     cap = cv2.VideoCapture(path) # open video
     current_frame = 0
-    # get frame every 10 frames until end of video
     while cap.isOpened():
         ret, frame = cap.read() # read frame
         if ret: # if frame is read correctly
